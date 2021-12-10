@@ -53,10 +53,10 @@ class MainActivity : AppCompatActivity() {
             onPause()
         }
         masters.setOnClickListener {
-            Toast.makeText(this@MainActivity, "Coming soon ;)", Toast.LENGTH_SHORT).show()
-            /*val intent = Intent(this@MainActivity , PlayScreen::class.java)
+//            Toast.makeText(this@MainActivity, "Coming soon ;)", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@MainActivity , PlayScreen::class.java)
             intent.putExtra("mode",4)
-            startActivity(intent)*/
+            startActivity(intent)
             onPause()
         }
         highScores.setOnClickListener {
