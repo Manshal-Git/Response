@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".LeaderBoards">
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/Headings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Headings"
         app:layout_constraintVertical_bias="0.3" />
 
-    <!--<TextView
+    &lt;!&ndash;<TextView
         android:id="@+id/scoreValExpert"
         android:layout_width="194dp"
         android:layout_height="290dp"
@@ -147,7 +147,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/topPlayerExpert"
         app:layout_constraintTop_toBottomOf="@+id/Headings"
-        app:layout_constraintVertical_bias="0.251" />-->
+        app:layout_constraintVertical_bias="0.251" />&ndash;&gt;
 
     <TextView
         android:id="@+id/scoreValExpert"
@@ -228,6 +228,61 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/topPlayerMaster"
         app:layout_constraintTop_toBottomOf="@+id/Headings"
-        app:layout_constraintVertical_bias="0.365" />
+        app:layout_constraintVertical_bias="0.365" />-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:weightSum="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/l0"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="11"
+            app:cornerRadius="0dp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@+id/l2"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <Button
+            android:id="@+id/l1"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="11"
+            android:textColor="@color/black"
+            app:cornerRadius="0dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <Button
+            android:id="@+id/l2"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            app:cornerRadius="0dp"
+            android:text="11"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.894"
+            app:layout_constraintStart_toEndOf="@+id/l4"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <Button
+            android:id="@+id/l3"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            app:cornerRadius="0dp"
+            android:text="11"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toEndOf="@+id/l1"
+            tools:layout_editor_absoluteY="0dp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
