@@ -2,11 +2,16 @@ package com.manshal_khatri.response
 
 import android.content.Intent
 import android.media.MediaPlayer
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.graphics.drawable.toDrawable
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.manshal_khatri.response.DataStatus.DataStatus
 
 
 class MainActivity : AppCompatActivity() {
@@ -17,9 +22,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var expert : Button
     lateinit var masters : Button
     lateinit var highScores : FloatingActionButton
+//    lateinit var isDataOn : ImageView
 
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,13 +36,18 @@ class MainActivity : AppCompatActivity() {
         expert=findViewById(R.id.expert)
         masters=findViewById(R.id.master)
         highScores=findViewById(R.id.fab)
+//        isDataOn=findViewById(R.id.dataStatus)
+
+
+
+
 
 
 
 
 
         beginner.setOnClickListener {
-            val intent = Intent(this@MainActivity , PlayScreen::class.java)
+            val intent = Intent(this@MainActivity , RapidFirePS::class.java)
             intent.putExtra("mode",1)
             startActivity(intent)
             onPause()

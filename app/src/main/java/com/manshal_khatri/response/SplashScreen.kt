@@ -15,7 +15,7 @@ class SplashScreen : AppCompatActivity() {
         intro = MediaPlayer.create(this@SplashScreen, R.raw.quik)
         intro.start()
 
-        Timer("settingUp", false).schedule(7000) {
+        Timer("settingUp", false).schedule(1000) {
 
             val intent = Intent(this@SplashScreen , MainActivity::class.java)
             startActivity(intent)

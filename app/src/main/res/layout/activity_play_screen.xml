@@ -8,6 +8,34 @@
     android:background="@drawable/background_dark"
     tools:context=".PlayScreen">
 
+    <TextView
+        android:id="@+id/streakBonus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/safe"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@+id/scoreHead"
+        app:layout_constraintTop_toBottomOf="@+id/scoreVal" />
+
+    <TextView
+        android:id="@+id/streakMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:visibility="invisible"
+        android:textColor="@color/safe"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/question" />
 
     <Button
         android:id="@+id/button7"
@@ -185,6 +213,7 @@
         android:text="5"
         android:textColor="#ff0000"
         android:textSize="36sp"
+        android:drawablePadding="0dp"
         app:layout_constraintBottom_toTopOf="@+id/question"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

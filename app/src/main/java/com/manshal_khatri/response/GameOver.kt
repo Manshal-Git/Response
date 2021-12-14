@@ -63,8 +63,13 @@ class GameOver : AppCompatActivity() {
             finish()                            // should be handled efficiently try to know how ?
         }
         playAgainbtn.setOnClickListener {
-            val intent = Intent(this@GameOver,PlayScreen::class.java)
-            intent.putExtra("mode",mode)
+            val intent : Intent
+            if(mode == 5) {
+                 intent = Intent(this@GameOver,RapidFirePS::class.java)
+            }else {
+                 intent = Intent(this@GameOver, PlayScreen::class.java)
+                intent.putExtra("mode", mode)
+            }
             startActivity(intent)
             finish()                            // should be handled efficiently try to know how ?
         }
