@@ -1,19 +1,18 @@
 package com.manshal_khatri.response
 
 import android.animation.ObjectAnimator
+
 import android.content.Intent
-import android.content.SharedPreferences
+
 import android.media.MediaPlayer
 import android.os.*
-import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
-import android.widget.MediaController
+
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.core.animation.doOnEnd
-import org.w3c.dom.Text
+
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -37,6 +36,8 @@ class PlayScreen : AppCompatActivity() {
     lateinit var timeProgress : ProgressBar
     lateinit var lifes : TextView
     lateinit var scoreVal : TextView
+    lateinit var streakMsg : TextView
+    lateinit var streakBonus : TextView
 
     // logic building variables
     var mode = 0
@@ -48,6 +49,7 @@ class PlayScreen : AppCompatActivity() {
     var que =0
     var ans ="0"
     var options = 0
+    var streak = 0
     lateinit var musicCorrect : MediaPlayer
     lateinit var musicWrong : MediaPlayer
 
@@ -79,7 +81,7 @@ class PlayScreen : AppCompatActivity() {
         lifes=findViewById(R.id.lifenum)
         scoreVal=findViewById(R.id.scoreVal)
         timeProgress=findViewById(R.id.timeBar)
-        val buttons = arrayListOf<Button>(b0,b1,b2,b3,b4,b5,b6,b7,b8)
+        val buttons = arrayListOf(b0,b1,b2,b3,b4,b5,b6,b7,b8)
       // game mode parameteres
         fun Mode(lives:Int,times:Int,Seen:Boolean) {
             defaultLife = lives
@@ -103,8 +105,6 @@ class PlayScreen : AppCompatActivity() {
           val intent = Intent(this@PlayScreen,GameOver::class.java)
           intent.putExtra("score",score)
           intent.putExtra("mode",mode)
-          musicWrong.release()
-          musicCorrect.release()
           startActivity(intent)
           finish()
         }
@@ -117,15 +117,37 @@ class PlayScreen : AppCompatActivity() {
             if(score>9) {
                 scoreVal.text = score.toString()
             }else{
-                scoreVal.text = "0"+ score.toString()
+                "0$score".also { scoreVal.text = it }
             }
         }
+        fun setStreak(){
+            streak=intent.getIntExtra("streakVal",streak)
+        }
+        fun resetStreak(){
+            streak=0
+            intent.putExtra("streakVal",streak)
+        }
         fun onCorrect(){
+            println("streak $streak")
+            setStreak()
             val intent = Intent(this@PlayScreen,PlayScreen::class.java)
             intent.putExtra("life",life)
             musicCorrect.start()
             doReset=true
+            streak++
+            if(streak%5!=0){
             score++
+            }else{
+                val bonus=streak/5+1
+                streakBonus=findViewById(R.id.streakBonus)
+                streakMsg=findViewById(R.id.streakMsg)
+                streakBonus.text="+"+bonus.toString()
+                streakMsg.text="$streak in row"
+                streakMsg.visibility=TextView.VISIBLE
+                streakBonus.visibility=TextView.VISIBLE
+                score+=bonus
+            }
+            intent.putExtra("streakVal",streak)
             intent.putExtra("score",score)
             intent.putExtra("mode",mode)
             startActivity(intent)
@@ -134,6 +156,7 @@ class PlayScreen : AppCompatActivity() {
         fun onIncorrect() {
             musicWrong.start()
             life--
+            resetStreak()
             lifes.text=life.toString()
             if(life==0) {
                 doReset = true
@@ -141,24 +164,54 @@ class PlayScreen : AppCompatActivity() {
                 finish()
             }
         }
+        fun onTimeup(){
+            if(!doReset) {
+                life--
+                resetStreak()
+                if (life > 0) {
+                    musicWrong.start()
+                    doReset = true
+                    val intent = Intent(this@PlayScreen, PlayScreen::class.java)
+                    intent.putExtra("life", life)
+                    intent.putExtra("score", score)
+                    intent.putExtra("mode", mode)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    musicWrong.start()
+                    gameOver()
+                }
+            }
+        }
+
+        musicCorrect.setOnCompletionListener {
+            musicWrong.release()
+            musicCorrect.release()
+        }
         // Buttons functionality formatter
+
         fun formatButtons(){
             for(i in 0 until 9){
                 buttons[i].setBackgroundColor(getColor(R.color.white))
                 buttons[i].setTextColor(getColor(R.color.black))
-                if(i!=chosen){
-                    options=(10..99).random()
-                    if(options!=que){
-                        buttons[i].text=options.toString()
-                    }else{
-                        buttons[i].text="9"
+                if(i!=chosen){ //  WRONG BUTTONS SETTER
+                    if(mode==4){
+                        val queL=(que%10)*10
+                        options=((queL)..(queL+9)).random()
+                    }else {
+                        options = (10..99).random()
+                    }
+                    if (options != que) {
+                        buttons[i].text = options.toString()
+                    } else {
+                        buttons[i].text = "9"
                     }
                     // when wrong answer clicked
                     buttons[i].setOnClickListener {
                         buttons[i].setBackgroundColor(getColor(R.color.love))
                         onIncorrect()
                     }
-                }else{
+                }else{ // CORRECT BUTTON SETTER
                     buttons[chosen].text=ans
                     // when correct answer clicked
                     buttons[chosen].setOnClickListener {
@@ -189,14 +242,9 @@ class PlayScreen : AppCompatActivity() {
             updateLifes()
             scoreUpdater()
             Timer("settingUp", false).schedule(modeTime.toLong()) {
-                if(!doReset){
-                    gameOver()
-                }
-                finish()
+                onTimeup()
             }
         }
-
-        //  puzzle(quetion) maker
 
         makePuzzel()
 
@@ -205,8 +253,5 @@ class PlayScreen : AppCompatActivity() {
             .setDuration(modeTime.toLong())
             .start()
     }
-    override fun onBackPressed(){
-
-    }
-
+    override fun onBackPressed(){}
 }
