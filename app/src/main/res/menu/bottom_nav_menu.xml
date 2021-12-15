@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <group
+        android:checkableBehavior="single"
+
+        >
+    <item
+        android:id="@+id/Mode1"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/beginnersC"
+        />
+
+    <item
+        android:id="@+id/Mode2"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/experts" />
+
+    <item
+        android:id="@+id/Mode3"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/masters" />
+
+        <item
+            android:id="@+id/Mode4"
+            android:icon="@drawable/ic_notifications_black_24dp"
+            android:title="@string/rapid_fire" />
+    </group>
+
+</menu>
