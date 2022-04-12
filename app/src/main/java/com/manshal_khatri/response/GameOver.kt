@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -53,9 +55,9 @@ class GameOver : AppCompatActivity() {
             scoreHead.text="HighScore"
             topPlayer.visibility=0
             if(topPlayer.text.isNotEmpty()){
-                submit.visibility=0
+                submit.visibility=VISIBLE
             }else{
-                submit.visibility=1
+                submit.visibility= INVISIBLE
             }
 
         }
@@ -64,7 +66,7 @@ class GameOver : AppCompatActivity() {
         }
         playAgainbtn.setOnClickListener {
             val intent : Intent
-            if(mode == 5) {
+            if(mode == 4  ) {
                  intent = Intent(this@GameOver,RapidFirePS::class.java)
             }else {
                  intent = Intent(this@GameOver, PlayScreen::class.java)
@@ -77,8 +79,8 @@ class GameOver : AppCompatActivity() {
             sharedPreferences.edit().putString("topPlayer$mode",topPlayer.text.toString()).apply()
 
             Toast.makeText(this@GameOver, "Score submitted", Toast.LENGTH_SHORT).show()
-            topPlayer.visibility=1
-            submit.visibility=1
+            /*topPlayer.visibility=1
+            submit.visibility=1*/
             finish()
         }
 

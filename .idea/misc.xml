@@ -6,10 +6,19 @@
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/font/bangers.xml" value="0.1" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_game_over.xml" value="0.33541666666666664" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_games_menu.xml" value="0.25" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_leader_board.xml" value="0.3359375" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_leader_boards.xml" value="0.33" />
-        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_play_screen.xml" value="0.33541666666666664" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_play_screen.xml" value="0.33" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_player_profile.xml" value="0.2953125" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_rapid_fire_ps.xml" value="0.25" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_splash_screen.xml" value="0.33" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/fragment_beginner_ranks.xml" value="0.3359375" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/fragment_dashboard.xml" value="0.3359375" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/fragment_expert_ranks.xml" value="0.3359375" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/fragment_master_ranks.xml" value="0.14114583333333333" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/player_data.xml" value="0.33" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3359375" />
       </map>
     </option>
   </component>

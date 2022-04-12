@@ -12,4 +12,9 @@
     <color name="love">#F33A2C</color>
     <color name="yellow">#FCF73D</color>
     <color name="purple">#AE00FF</color>
+    <color name="PlayerCard">#00229E</color>
+    <color name="gold">#FFD81A</color>
+    <color name="silver">#E8E8E8</color>
+    <color name="bronze">#CE8E00</color>
+
 </resources>

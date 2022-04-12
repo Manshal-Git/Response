@@ -3,4 +3,16 @@
 
     <string name="highScore">HighScore data</string>
     <string name="time">Time</string>
+    <string name="title_activity_leader_board">LeaderBoard</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="beginner">Beginner</string>
+    <string name="experts">Experts</string>
+    <string name="masters">Masters</string>
+    <string name="beginners">beginners</string>
+    <string name="beginnersC">Beginners</string>
+    <string name="rapid_fire">Rapid Fire</string>
 </resources>

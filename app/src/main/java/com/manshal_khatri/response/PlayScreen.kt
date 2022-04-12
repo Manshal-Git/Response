@@ -192,8 +192,8 @@ class PlayScreen : AppCompatActivity() {
 
         fun formatButtons(){
             for(i in 0 until 9){
-                buttons[i].setBackgroundColor(getColor(R.color.white))
-                buttons[i].setTextColor(getColor(R.color.black))
+              //  buttons[i].setBackgroundColor(getColor(R.color.white))
+              //  buttons[i].setTextColor(getColor(R.color.black))
                 if(i!=chosen){ //  WRONG BUTTONS SETTER
                     if(mode==4){
                         val queL=(que%10)*10
@@ -208,7 +208,7 @@ class PlayScreen : AppCompatActivity() {
                     }
                     // when wrong answer clicked
                     buttons[i].setOnClickListener {
-                        buttons[i].setBackgroundColor(getColor(R.color.love))
+//                        buttons[i].setBackgroundColor(getColor(R.color.love))
                         onIncorrect()
                     }
                 }else{ // CORRECT BUTTON SETTER

@@ -5,9 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_dark"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/playerProfileBtn"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:text="profile"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -31,7 +39,7 @@
         android:layout_marginTop="120dp"
         android:fontFamily="sans-serif-black"
         android:text="Response"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
 
         android:textSize="55sp"
         app:fontFamily="sans-serif"
@@ -46,7 +54,7 @@
         android:layout_marginTop="244dp"
         android:fontFamily="sans-serif-black"
         android:text="Select mode"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
 
         android:textSize="25sp"
         app:fontFamily="sans-serif"

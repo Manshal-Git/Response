@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.graphics.drawable.toDrawable
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.manshal_khatri.response.DataStatus.DataStatus
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var normal : Button
     lateinit var expert : Button
     lateinit var masters : Button
+    lateinit var playerProfile : AppCompatButton
     lateinit var highScores : FloatingActionButton
 //    lateinit var isDataOn : ImageView
 
@@ -36,18 +38,11 @@ class MainActivity : AppCompatActivity() {
         expert=findViewById(R.id.expert)
         masters=findViewById(R.id.master)
         highScores=findViewById(R.id.fab)
+        playerProfile=findViewById(R.id.playerProfileBtn)
 //        isDataOn=findViewById(R.id.dataStatus)
 
-
-
-
-
-
-
-
-
         beginner.setOnClickListener {
-            val intent = Intent(this@MainActivity , RapidFirePS::class.java)
+            val intent = Intent(this@MainActivity , PlayScreen::class.java)
             intent.putExtra("mode",1)
             startActivity(intent)
             onPause()
@@ -66,13 +61,18 @@ class MainActivity : AppCompatActivity() {
         }
         masters.setOnClickListener {
 //            Toast.makeText(this@MainActivity, "Coming soon ;)", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this@MainActivity , PlayScreen::class.java)
+            val intent = Intent(this@MainActivity , RapidFirePS::class.java)
             intent.putExtra("mode",4)
             startActivity(intent)
             onPause()
         }
         highScores.setOnClickListener {
             val intent = Intent(this@MainActivity , LeaderBoards::class.java)
+            startActivity(intent)
+            onPause()
+        }
+        playerProfile.setOnClickListener {
+            val intent = Intent(this@MainActivity , PlayerProfileActivity::class.java)
             startActivity(intent)
             onPause()
         }
