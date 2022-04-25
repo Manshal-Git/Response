@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.google.android.material.navigation.NavigationView
-import java.util.*
+import com.google.firebase.firestore.DocumentSnapshot
+import com.manshal_khatri.response.dataClass.PlayerInLB
 
 
+val playersList = mutableListOf<PlayerInLB>()
 class LeaderBoards : AppCompatActivity() {
 
    /* lateinit var highScore1:TextView
@@ -24,6 +26,7 @@ class LeaderBoards : AppCompatActivity() {
     lateinit var RFRanks :Button
     lateinit var rankBoards : NavigationView
     lateinit var sharedPreferences: SharedPreferences
+
 
 
 
@@ -84,17 +87,21 @@ class LeaderBoards : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.frame,expert_ranks())
                 .commit()*/
-
-        for(i in 2 until 6) {
-           /* highScore[i-2].text=sharedPreferences.getInt("highScore$i",0).toString()
-            topPlayer[i-2].text=sharedPreferences.getString("topPlayer$i","unknown")*/
-        }
-
     }
     fun defaultFrag(){
         supportFragmentManager.beginTransaction()
             .replace(R.id.frame,beginner_ranks())
             .commit()
     }
-
+    fun setData(list : MutableList<DocumentSnapshot>){
+        playersList.clear()
+        for (element in list){
+//            println(element)
+            val name = element.data?.get("name").toString()
+            val score = element.data?.get("score").toString().toInt()
+            println("NAME || SCORE : $score")
+           playersList.add(PlayerInLB(name , score))
+            //playersList.add(PlayerInLB("manshal",5))
+        }
+    }
 }

@@ -11,6 +11,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
+import com.manshal_khatri.response.dataClass.Players
+import com.manshal_khatri.response.fireStore.FireStore
 
 class GameOver : AppCompatActivity() {
 
@@ -51,14 +53,15 @@ class GameOver : AppCompatActivity() {
 
         if(highScore<scoreIs){
             sharedPreferences.edit().putInt("highScore$mode",scoreIs).apply()
+            FireStore().storeDetails(Players("101",FSplayer, FSplayerName,scoreIs.toLong(),),this)
             new.text="New"
             scoreHead.text="HighScore"
-            topPlayer.visibility=0
-            if(topPlayer.text.isNotEmpty()){
+            //topPlayer.visibility=0
+            /*if(topPlayer.text.isNotEmpty()){
                 submit.visibility=VISIBLE
             }else{
                 submit.visibility= INVISIBLE
-            }
+            }*/
 
         }
         homebtn.setOnClickListener {

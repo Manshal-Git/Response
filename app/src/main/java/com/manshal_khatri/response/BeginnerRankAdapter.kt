@@ -16,9 +16,10 @@ import androidx.cardview.widget.CardView
 import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.MaterialColors.getColor
+import com.manshal_khatri.response.dataClass.PlayerInLB
 import com.manshal_khatri.response.dataClass.Players
 
-class BeginnerRankAdapter(val context : Context , val playerList : ArrayList<Players>) : RecyclerView.Adapter<BeginnerRankAdapter.PlayerViewHolder>(){
+class BeginnerRankAdapter(val context: Context, val playerList: MutableList<PlayerInLB>) : RecyclerView.Adapter<BeginnerRankAdapter.PlayerViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.player_data,parent,false)
@@ -26,12 +27,12 @@ class BeginnerRankAdapter(val context : Context , val playerList : ArrayList<Pla
     }
 
     override fun onBindViewHolder(holder: PlayerViewHolder, position: Int) {
-        playerList.sortByDescending { it.playerScore }
+        playerList.sortByDescending { it.score }
         val players = playerList[position]
-        holder.playerName.text=players.playerName
-        holder.playerScore.text=players.playerScore.toString()
+        holder.playerName.text=players.name
+        holder.playerScore.text=players.score.toString()
         holder.rank.text=(position+1).toString()
-        holder.avatar.setBackgroundResource(players.avatar)
+       // holder.avatar.setBackgroundResource(players.avatar)
     }
 
 

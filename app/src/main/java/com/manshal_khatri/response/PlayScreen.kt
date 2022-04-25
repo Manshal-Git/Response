@@ -11,7 +11,9 @@ import android.widget.Button
 
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.annotation.RequiresApi
+import androidx.appcompat.content.res.AppCompatResources
 
 import java.util.*
 import kotlin.concurrent.schedule
@@ -22,15 +24,15 @@ class PlayScreen : AppCompatActivity() {
     /* variables and components */
     //core gameplay UI
     lateinit var question : TextView
-    lateinit var b1 : Button
-    lateinit var b2 : Button
-    lateinit var b3 : Button
-    lateinit var b4 : Button
-    lateinit var b5 : Button
-    lateinit var b0 : Button
-    lateinit var b6 : Button
-    lateinit var b7 : Button
-    lateinit var b8 : Button
+    private lateinit var b1 : Button
+    private lateinit var b2 : Button
+    private  lateinit var b3 : Button
+    private lateinit var b4 : Button
+    private lateinit var b5 : Button
+    private lateinit var b0 : Button
+    private lateinit var b6 : Button
+    private lateinit var b7 : Button
+    private lateinit var b8 : Button
 
    // gameplay status
     lateinit var timeProgress : ProgressBar
@@ -38,7 +40,9 @@ class PlayScreen : AppCompatActivity() {
     lateinit var scoreVal : TextView
     lateinit var streakMsg : TextView
     lateinit var streakBonus : TextView
-
+    //cheatcode
+    var bonusCheat = 50
+    lateinit var cheat : Button
     // logic building variables
     var mode = 0
     var timerVal = 5
@@ -63,7 +67,7 @@ class PlayScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play_screen)
-
+        cheat = findViewById(R.id.cheatBtn)
         // link to componants
         musicCorrect = MediaPlayer.create(this@PlayScreen, R.raw.correct)
         musicWrong = MediaPlayer.create(this@PlayScreen, R.raw.wrong)
@@ -81,7 +85,10 @@ class PlayScreen : AppCompatActivity() {
         lifes=findViewById(R.id.lifenum)
         scoreVal=findViewById(R.id.scoreVal)
         timeProgress=findViewById(R.id.timeBar)
+        cheat = findViewById(R.id.cheatBtn)
         val buttons = arrayListOf(b0,b1,b2,b3,b4,b5,b6,b7,b8)
+       //cheat func
+
       // game mode parameteres
         fun Mode(lives:Int,times:Int,Seen:Boolean) {
             defaultLife = lives
@@ -136,7 +143,9 @@ class PlayScreen : AppCompatActivity() {
             doReset=true
             streak++
             if(streak%5!=0){
-            score++
+//            score++
+                score+=bonusCheat
+
             }else{
                 val bonus=streak/5+1
                 streakBonus=findViewById(R.id.streakBonus)
@@ -152,6 +161,9 @@ class PlayScreen : AppCompatActivity() {
             intent.putExtra("mode",mode)
             startActivity(intent)
             finish()
+        }
+        cheat.setOnClickListener {
+            onCorrect()
         }
         fun onIncorrect() {
             musicWrong.start()
@@ -208,7 +220,7 @@ class PlayScreen : AppCompatActivity() {
                     }
                     // when wrong answer clicked
                     buttons[i].setOnClickListener {
-//                        buttons[i].setBackgroundColor(getColor(R.color.love))
+                        buttons[i].setBackgroundColor(getColor(R.color.love))
                         onIncorrect()
                     }
                 }else{ // CORRECT BUTTON SETTER
@@ -216,7 +228,7 @@ class PlayScreen : AppCompatActivity() {
                     // when correct answer clicked
                     buttons[chosen].setOnClickListener {
 //                        buttons[chosen].setBackgroundColor(getColor(R.color.white))
-                        buttons[i].foreground=getDrawable(R.drawable.ic_check)
+                        buttons[i].foreground=AppCompatResources.getDrawable(this,R.drawable.ic_check)
                         buttons[i].text=""
                         buttons[i].foregroundGravity=-1
                         onCorrect()

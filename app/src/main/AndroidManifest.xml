@@ -35,6 +35,9 @@
             android:name=".PlayScreen"
             android:exported="false" />
         <activity
+            android:name=".AuthenticationActivity"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>

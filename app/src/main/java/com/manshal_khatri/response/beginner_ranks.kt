@@ -1,5 +1,6 @@
 package com.manshal_khatri.response
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 //import android.support.v4.app.Fragment
@@ -9,9 +10,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.manshal_khatri.response.BeginnerRankAdapter
-import com.manshal_khatri.response.R
-import com.manshal_khatri.response.dataClass.Players
+import com.google.firebase.firestore.DocumentSnapshot
+import com.manshal_khatri.response.dataClass.PlayerInLB
+import com.manshal_khatri.response.fireStore.FireStore
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -25,20 +26,11 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class beginner_ranks : Fragment() {
-    /*// TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }*/
     lateinit var topPlayerList : RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
-    val playersList = arrayListOf<Players>(
+
+    /*val playersList = arrayListOf<Players>(
         Players("manshal",10,R.drawable.ic_check) ,
                 Players("man",20,R.drawable.ic_lives),
     Players("manshal",30,R.drawable.background_dark),Players("manshal",10,R.drawable.ic_check) ,
@@ -47,13 +39,13 @@ class beginner_ranks : Fragment() {
         Players("man",20,R.drawable.ic_lives),
         Players("manshal",30,R.drawable.background_dark),Players("manshal",10,R.drawable.ic_check) ,
         Players("man",20,R.drawable.ic_lives),
-        Players("manshal",30,R.drawable.background_dark)/*
+        Players("manshal",30,R.drawable.background_dark)
     Players("m",40),
     Players("sul",5),
     Players("sahal",2)*/
-    )
 
-    lateinit var dataAdapter: BeginnerRankAdapter
+
+   // lateinit var dataAdapter: BeginnerRankAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,30 +54,16 @@ class beginner_ranks : Fragment() {
         val view = inflater.inflate(R.layout.fragment_beginner_ranks, container, false)
         topPlayerList = view.findViewById(R.id.TopPlayersList)
         layoutManager = LinearLayoutManager(activity)
-        dataAdapter= BeginnerRankAdapter(activity as Context,playersList)
-        topPlayerList.adapter=dataAdapter
-        topPlayerList.layoutManager=layoutManager
+        FireStore().getAllRecords(activity as Context)
+        if(playersList.isNotEmpty())
 
+        topPlayerList.adapter=BeginnerRankAdapter(activity as Context,playersList)
+        topPlayerList.layoutManager=layoutManager
         return view
     }
-
-   /* companion object {
-        *//**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment beginner_ranks.
-         *//*
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            beginner_ranks().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }*/
+    fun setData(list : MutableList<DocumentSnapshot>){
+        for (element in list){
+            println(element)
+        }
+    }
 }

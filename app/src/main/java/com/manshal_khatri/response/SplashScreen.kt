@@ -17,7 +17,7 @@ class SplashScreen : AppCompatActivity() {
 
         Timer("settingUp", false).schedule(1000) {
 
-            val intent = Intent(this@SplashScreen , MainActivity::class.java)
+            val intent = Intent(this@SplashScreen , AuthenticationActivity::class.java)
             startActivity(intent)
             finish()
         }
