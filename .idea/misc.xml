@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/drawable-anydpi/ic_check.xml" value="0.251" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/drawable/button_style.xml" value="0.224" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/drawable/edit_btn_bg.xml" value="0.154" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/drawable/edittext_style.xml" value="0.2325" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/font/bangers.xml" value="0.1" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_authentication.xml" value="0.25" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_game_over.xml" value="0.33541666666666664" />
@@ -16,7 +18,8 @@
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_player_profile.xml" value="0.25" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_rapid_fire_ps.xml" value="0.25" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/activity_splash_screen.xml" value="0.33" />
-        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/frag_login.xml" value="0.2630208333333333" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/button_style.xml" value="0.3125" />
+        <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/frag_login.xml" value="0.33" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/frag_register.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/fragment_beginner_ranks.xml" value="0.3359375" />
         <entry key="..\:/Users/AAA/AndroidStudioProjects/Response2/app/src/main/res/layout/fragment_dashboard.xml" value="0.3359375" />

@@ -57,12 +57,6 @@ class PlayScreen : AppCompatActivity() {
     lateinit var musicCorrect : MediaPlayer
     lateinit var musicWrong : MediaPlayer
 
-
-
-
-
-
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

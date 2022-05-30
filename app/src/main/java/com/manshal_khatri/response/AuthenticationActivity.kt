@@ -21,10 +21,14 @@ class AuthenticationActivity : AppCompatActivity() {
         if(!isSignedin) {
             Toast.makeText(this, "welcome", Toast.LENGTH_SHORT).show()
         }else{
-            startActivity(Intent(this,MainActivity::class.java))
+           goToMainScreen()
             FSplayer = sharedPreferences.getString(Constants.CUR_PLAYER,"").toString()
             finish()
         }
+    }
+
+    fun goToMainScreen(){
+        startActivity(Intent(this,MainActivity::class.java))
     }
 
     override fun onPause() {

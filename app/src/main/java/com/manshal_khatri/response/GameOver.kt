@@ -28,8 +28,6 @@ class GameOver : AppCompatActivity() {
     var scoreIs = 0
     var highScore=scoreIs
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_over)
@@ -46,8 +44,6 @@ class GameOver : AppCompatActivity() {
         homebtn=findViewById(R.id.homeBtn)
         playAgainbtn=findViewById(R.id.playAgain)
 
-
-
         scoreIs=intent.getIntExtra("score",0)
         scoreVal.text=scoreIs.toString()
 
@@ -56,13 +52,6 @@ class GameOver : AppCompatActivity() {
             FireStore().storeDetails(Players("101",FSplayer, FSplayerName,scoreIs.toLong(),),this)
             new.text="New"
             scoreHead.text="HighScore"
-            //topPlayer.visibility=0
-            /*if(topPlayer.text.isNotEmpty()){
-                submit.visibility=VISIBLE
-            }else{
-                submit.visibility= INVISIBLE
-            }*/
-
         }
         homebtn.setOnClickListener {
             finish()                            // should be handled efficiently try to know how ?
@@ -80,10 +69,7 @@ class GameOver : AppCompatActivity() {
         }
         submit.setOnClickListener {
             sharedPreferences.edit().putString("topPlayer$mode",topPlayer.text.toString()).apply()
-
             Toast.makeText(this@GameOver, "Score submitted", Toast.LENGTH_SHORT).show()
-            /*topPlayer.visibility=1
-            submit.visibility=1*/
             finish()
         }
 

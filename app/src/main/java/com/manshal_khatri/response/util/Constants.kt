@@ -7,4 +7,5 @@ object Constants {
     const val SP_GET_PLAYERDATA = "PlayerData"
     const val CUR_PLAYER = "user"
     const val FS_PLAYER = "responser"
+    const val PROFILE_IMAGE = "profilePic"
 }

@@ -43,6 +43,7 @@ class PlayerProfileActivity : AppCompatActivity() {
     lateinit var TVname : TextView
     lateinit var  TVscore : TextView
     lateinit var editNameBtn : AppCompatButton
+    val fireStore = FireStore()
 
 //    lateinit var loginState : View
     lateinit var sharedPreferences : SharedPreferences
@@ -60,18 +61,12 @@ class PlayerProfileActivity : AppCompatActivity() {
         binding = ActivityPlayerProfileBinding.inflate(layoutInflater)  // Binding.Inflate(layoutInflater) used in Activities
         //loginState= findViewById(R.id.loginState)
         sharedPreferences = getSharedPreferences(Constants.SP_GET_PLAYERDATA, MODE_PRIVATE)
-        val mypic = sharedPreferences.getString("profilePic","https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png")
+        val mypic = sharedPreferences.getString(Constants.PROFILE_IMAGE,"https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png")
             ?.toUri()
-        Glide.with(this).load(mypic).into(img)
-        FireStore().getDetails(this)
+        Glide.with(this).load(mypic).circleCrop().into(img)
+        fireStore.getDetails(this)
         button.setOnClickListener {
-            if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
-
-                val storageIntent = Intent(Settings.ACTION_SETTINGS,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                startActivityForResult(storageIntent,Constants.CHOOSE_IMAGE)
-            }else{
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),Constants.READ_STORAGE_PERMISSION)
-            }
+            chooseImage()
         }
         signOut.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
@@ -97,7 +92,14 @@ class PlayerProfileActivity : AppCompatActivity() {
             TVname.visibility = VISIBLE
 //            Toast.makeText(this, "no", Toast.LENGTH_SHORT).show()  //DEPRECATED
         }
-
+    }
+    private fun chooseImage(){
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
+            val storageIntent = Intent(Settings.ACTION_SETTINGS,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(storageIntent,Constants.CHOOSE_IMAGE)
+        }else{
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),Constants.READ_STORAGE_PERMISSION)
+        }
     }
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -106,7 +108,7 @@ class PlayerProfileActivity : AppCompatActivity() {
                 if(data!=null){
                     try{
                         val selectedImageUri = data.data!!
-                        Glide.with(this).load(selectedImageUri).into(img)
+                        Glide.with(this).load(selectedImageUri).circleCrop().into(img)
                         sharedPreferences.edit().putString("profilePic",selectedImageUri.toString()).apply()
                     }catch(e : Exception){
                         e.printStackTrace()
@@ -124,7 +126,7 @@ class PlayerProfileActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        FireStore().getDetails(this)
+        fireStore.getDetails(this)
         super.onResume()
     }
 
@@ -132,6 +134,6 @@ class PlayerProfileActivity : AppCompatActivity() {
         super.onBackPressed()
         FSplayerName = TVname.text.toString()
         val uid = sharedPreferences.getString(Constants.CUR_PLAYER,"")
-        uid?.let { Players("101",it, FSplayerName, TVscore.text.toString().toLong() ) }?.let { FireStore().storeDetails(it,this) }
+        uid?.let { Players("101",it, FSplayerName, TVscore.text.toString().toLong() ) }?.let { fireStore.storeDetails(it,this) }
     }
 }

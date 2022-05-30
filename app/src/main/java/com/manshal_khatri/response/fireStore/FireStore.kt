@@ -21,12 +21,12 @@ class FireStore {
 
         fun storeDetails(user : Players, activity: Activity) {
                 db.collection(Constants.FS_PLAYER)
-                        .document(user.email).set(user, SetOptions.merge())  // setOptions = merge means
-                        // we can add unfilled details later on to the profile like profile image
+                        .document(user.email)
+                        .set(user, SetOptions.merge())
                         .addOnSuccessListener {
                                 Toast.makeText(activity, "Saved", Toast.LENGTH_SHORT).show()
                         }.addOnFailureListener{
-                                Log.e(null,"error while storing user details",it)
+                                println("error while storing user details : $it")
 //                                d.toggleDialog(dd)
                         }
         }
