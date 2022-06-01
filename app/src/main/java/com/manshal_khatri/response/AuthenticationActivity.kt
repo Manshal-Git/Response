@@ -1,12 +1,25 @@
 package com.manshal_khatri.response
 
-import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import com.manshal_khatri.response.util.Constants
+import com.manshal_khatri.response.util.DataStores
+import com.manshal_khatri.response.util.DataStores.preferenceDataStoreAuth
+import com.manshal_khatri.response.util.DataStores.preferenceDataStoreScores
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 class AuthenticationActivity : AppCompatActivity() {
@@ -15,16 +28,19 @@ class AuthenticationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication)
-        sharedPreferences = getSharedPreferences(Constants.SP_GET_PLAYERDATA, MODE_PRIVATE)
-        isSignedin = sharedPreferences.getBoolean(Constants.SP_RW_IS_LOGGED_IN,false)
+        sharedPreferences = getSharedPreferences(Constants.SP_GET_PLAYER_DATA, MODE_PRIVATE)
+       CoroutineScope(Dispatchers.IO).launch {
+           val t = isLoggedIn(Constants.SP_RW_IS_LOGGED_IN)
+           if (t != null) isSignedin = t
 
-        if(!isSignedin) {
-            Toast.makeText(this, "welcome", Toast.LENGTH_SHORT).show()
-        }else{
-           goToMainScreen()
-            FSplayer = sharedPreferences.getString(Constants.CUR_PLAYER,"").toString()
-            finish()
-        }
+           if (!isSignedin) {
+//               Toast.makeText(this@AuthenticationActivity, "welcome", Toast.LENGTH_SHORT).show()
+           } else {
+               playerEmailId = getEmail(Constants.CUR_PLAYER_MAIL)!!
+               goToMainScreen()
+               finish()
+           }
+       }
     }
 
     fun goToMainScreen(){
@@ -35,4 +51,13 @@ class AuthenticationActivity : AppCompatActivity() {
         super.onPause()
         finish()
     }
+    suspend fun isLoggedIn(key : String) : Boolean? {
+        val data = preferenceDataStoreAuth.data.first()
+        return data[booleanPreferencesKey(key)]
+    }
+    suspend fun getEmail(key : String) : String? {
+        val data = preferenceDataStoreAuth.data.first()
+        return data[stringPreferencesKey(key)]
+    }
+
 }

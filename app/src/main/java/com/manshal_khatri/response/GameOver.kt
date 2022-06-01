@@ -1,18 +1,25 @@
 package com.manshal_khatri.response
 
+import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.isVisible
-import com.manshal_khatri.response.dataClass.Players
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.lifecycleScope
 import com.manshal_khatri.response.fireStore.FireStore
+import com.manshal_khatri.response.util.Constants
+import com.manshal_khatri.response.util.DataStores
+import com.manshal_khatri.response.util.DataStores.preferenceDataStoreScores
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+
 
 class GameOver : AppCompatActivity() {
 
@@ -21,11 +28,11 @@ class GameOver : AppCompatActivity() {
     lateinit var topPlayer : EditText
     lateinit var new : TextView
     lateinit var homebtn : Button
-    lateinit var playAgainbtn : Button
+    lateinit var playAgainBtn : Button
     lateinit var submit : Button
 
-    lateinit var sharedPreferences : SharedPreferences
-    var scoreIs = 0
+//    lateinit var sharedPreferences : SharedPreferences
+    var scoreIs = 0L
     var highScore=scoreIs
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,28 +42,36 @@ class GameOver : AppCompatActivity() {
         scoreHead=findViewById(R.id.scoreHead)
         topPlayer=findViewById(R.id.topPlayer)
         submit=findViewById(R.id.submit)
-
-        val mode=intent.getIntExtra("mode",1)
-        sharedPreferences = getSharedPreferences(getString(R.string.highScore), MODE_PRIVATE)
-        highScore=sharedPreferences.getInt("highScore$mode",scoreIs)
-
         scoreVal=findViewById(R.id.scoreVal)
         homebtn=findViewById(R.id.homeBtn)
-        playAgainbtn=findViewById(R.id.playAgain)
-
-        scoreIs=intent.getIntExtra("score",0)
+        playAgainBtn=findViewById(R.id.playAgain)
+        val mode=intent.getIntExtra("mode",1)
+//        sharedPreferences = getSharedPreferences(getString(R.string.highScore), MODE_PRIVATE)
+        scoreIs= intent.getIntExtra("score",0).toLong()
         scoreVal.text=scoreIs.toString()
 
+        lifecycleScope.launch {
+            getScore("highScore$mode")?.let {
+                highScore = it
+            }
+//        highScore=sharedPreferences.getInt("highScore$mode",scoreIs)
         if(highScore<scoreIs){
-            sharedPreferences.edit().putInt("highScore$mode",scoreIs).apply()
-            FireStore().storeDetails(Players("101",FSplayer, FSplayerName,scoreIs.toLong(),),this)
+//            sharedPreferences.edit().putInt("highScore$mode",scoreIs).apply()
+            storeScore("highScore$mode",scoreIs)
+            when(mode){
+                1 -> FireStore().updateScore(playerEmailId,Constants.MODE_BEGINNERS, scoreIs,this@GameOver)
+                2 -> FireStore().updateScore(playerEmailId,Constants.MODE_NORMAL, scoreIs,this@GameOver)
+                3 -> FireStore().updateScore(playerEmailId,Constants.MODE_EXPERT, scoreIs,this@GameOver)
+                4 -> FireStore().updateScore(playerEmailId,Constants.MODE_RAPID_FIRE, scoreIs,this@GameOver)
+            }
             new.text="New"
             scoreHead.text="HighScore"
+        }
         }
         homebtn.setOnClickListener {
             finish()                            // should be handled efficiently try to know how ?
         }
-        playAgainbtn.setOnClickListener {
+        playAgainBtn.setOnClickListener {
             val intent : Intent
             if(mode == 4  ) {
                  intent = Intent(this@GameOver,RapidFirePS::class.java)
@@ -67,12 +82,17 @@ class GameOver : AppCompatActivity() {
             startActivity(intent)
             finish()                            // should be handled efficiently try to know how ?
         }
-        submit.setOnClickListener {
-            sharedPreferences.edit().putString("topPlayer$mode",topPlayer.text.toString()).apply()
-            Toast.makeText(this@GameOver, "Score submitted", Toast.LENGTH_SHORT).show()
-            finish()
-        }
 
+    }
+    suspend fun getScore(key : String): Long? {
+        val data = preferenceDataStoreScores.data.first()
+        return data[longPreferencesKey(key)]
+    }
+
+    suspend fun storeScore(k: String, score:Long){
+        preferenceDataStoreScores.edit {
+            it[longPreferencesKey(k)] = score
+        }
     }
 
 }

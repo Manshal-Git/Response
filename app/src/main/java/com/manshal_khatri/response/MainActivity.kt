@@ -6,22 +6,16 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
-import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthRegistrar
 import com.manshal_khatri.response.dataClass.Players
 import com.manshal_khatri.response.databinding.ActivityMainBinding
 import com.manshal_khatri.response.fireStore.FireStore
 import com.manshal_khatri.response.util.Constants
 
 //var player : FirebaseUser? = null
-var FSplayer : String = ""
+var playerEmailId : String = ""
 var FSplayerName : String = ""
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -39,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        sharedPreferences = getSharedPreferences(Constants.SP_GET_PLAYERDATA, MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(Constants.SP_GET_PLAYER_DATA, MODE_PRIVATE)
         beginner = findViewById(R.id.beginner)
         normal = findViewById(R.id.normal)
         expert = findViewById(R.id.expert)
@@ -84,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         }
         isSignedin = sharedPreferences.getBoolean(Constants.SP_RW_IS_LOGGED_IN, false)
         sharedPreferences.edit().putBoolean(Constants.SP_RW_IS_LOGGED_IN, true).apply()
-        sharedPreferences.edit().putString(Constants.CUR_PLAYER, FSplayer).apply()
+        sharedPreferences.edit().putString(Constants.CUR_PLAYER_MAIL, playerEmailId).apply()
 
 
         // SHOULD BE DEPRECATED IN THIS APP TO MANAGE ACCOUNTS MORE EFFICIENTLY

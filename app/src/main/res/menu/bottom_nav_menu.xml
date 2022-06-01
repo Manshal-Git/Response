@@ -9,6 +9,7 @@
         android:id="@+id/Mode1"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/beginnersC"
+        android:checked="true"
         />
 
     <item

@@ -5,68 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash2"
-
     android:orientation="vertical"
+    android:animateLayoutChanges="true"
     tools:context=".LeaderBoards">
 
-    <!-- <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:weightSum="4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-
-        <Button
-            android:id="@+id/l0"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="11"
-            app:cornerRadius="0dp"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/l2"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <Button
-            android:id="@+id/l1"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="11"
-            android:textColor="@color/black"
-            app:cornerRadius="0dp"
-
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <Button
-            android:id="@+id/l2"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            app:cornerRadius="0dp"
-            android:text="11"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.894"
-            app:layout_constraintStart_toEndOf="@+id/l4"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <Button
-            android:id="@+id/l3"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            app:cornerRadius="0dp"
-            android:text="11"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/l1"
-            tools:layout_editor_absoluteY="0dp" />
-    </LinearLayout>-->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -88,8 +30,10 @@
         android:id="@+id/leaderBoardsModes"
         android:layout_width="match_parent"
         android:layout_height="210dp"
-        android:outlineSpotShadowColor="@color/gold"
         app:itemIconSize="36dp"
+        android:background="@drawable/background_dark"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:menu="@menu/bottom_nav_menu" >
         <ImageView
@@ -100,6 +44,9 @@
             android:layout_gravity="right"/>
     </com.google.android.material.navigation.NavigationView>
 
+    <include layout="@layout/processing_screen"
+        android:id="@+id/processingScreen"
+        />
 
     <FrameLayout
         android:id="@+id/frame"

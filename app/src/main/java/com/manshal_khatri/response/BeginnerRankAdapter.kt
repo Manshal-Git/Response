@@ -15,9 +15,11 @@ import androidx.cardview.widget.CardView
 
 import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.color.MaterialColors.getColor
 import com.manshal_khatri.response.dataClass.PlayerInLB
 import com.manshal_khatri.response.dataClass.Players
+import com.manshal_khatri.response.util.Constants
 
 class BeginnerRankAdapter(val context: Context, val playerList: MutableList<PlayerInLB>) : RecyclerView.Adapter<BeginnerRankAdapter.PlayerViewHolder>(){
 
@@ -32,7 +34,7 @@ class BeginnerRankAdapter(val context: Context, val playerList: MutableList<Play
         holder.playerName.text=players.name
         holder.playerScore.text=players.score.toString()
         holder.rank.text=(position+1).toString()
-       // holder.avatar.setBackgroundResource(players.avatar)
+        Glide.with(holder.avatar.context).load(players.avatar).error(Constants.DEF_AVATAR).centerCrop().into(holder.avatar)
     }
 
 

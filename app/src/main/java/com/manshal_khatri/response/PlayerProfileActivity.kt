@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.view.LayoutInflater
 
-import android.view.View
 import android.view.View.*
 import android.widget.EditText
 
@@ -25,12 +23,20 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.manshal_khatri.response.dataClass.Players
 import com.manshal_khatri.response.databinding.ActivityPlayerProfileBinding
 import com.manshal_khatri.response.fireStore.FireStore
 import com.manshal_khatri.response.util.Constants
+import com.manshal_khatri.response.util.DataStores.preferenceDataStoreAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.Exception
 
 
@@ -60,8 +66,8 @@ class PlayerProfileActivity : AppCompatActivity() {
         TVscore = findViewById(R.id.TVHighScoreVal)
         binding = ActivityPlayerProfileBinding.inflate(layoutInflater)  // Binding.Inflate(layoutInflater) used in Activities
         //loginState= findViewById(R.id.loginState)
-        sharedPreferences = getSharedPreferences(Constants.SP_GET_PLAYERDATA, MODE_PRIVATE)
-        val mypic = sharedPreferences.getString(Constants.PROFILE_IMAGE,"https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png")
+        sharedPreferences = getSharedPreferences(Constants.SP_GET_PLAYER_DATA, MODE_PRIVATE)
+        val mypic = sharedPreferences.getString(Constants.PROFILE_IMAGE,Constants.DEF_AVATAR)
             ?.toUri()
         Glide.with(this).load(mypic).circleCrop().into(img)
         fireStore.getDetails(this)
@@ -70,7 +76,11 @@ class PlayerProfileActivity : AppCompatActivity() {
         }
         signOut.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            sharedPreferences.edit().putBoolean(Constants.SP_RW_IS_LOGGED_IN,false).apply()
+            CoroutineScope(Dispatchers.IO).launch{
+                    preferenceDataStoreAuth.edit {
+                        it[booleanPreferencesKey(Constants.SP_RW_IS_LOGGED_IN)] = false
+                    }
+            }
             startActivity(Intent(this@PlayerProfileActivity,AuthenticationActivity::class.java))
             finish()
         }
@@ -95,7 +105,7 @@ class PlayerProfileActivity : AppCompatActivity() {
     }
     private fun chooseImage(){
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
-            val storageIntent = Intent(Settings.ACTION_SETTINGS,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            val storageIntent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             startActivityForResult(storageIntent,Constants.CHOOSE_IMAGE)
         }else{
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),Constants.READ_STORAGE_PERMISSION)
@@ -109,6 +119,16 @@ class PlayerProfileActivity : AppCompatActivity() {
                     try{
                         val selectedImageUri = data.data!!
                         Glide.with(this).load(selectedImageUri).circleCrop().into(img)
+                        val propicStorageRef : StorageReference = FirebaseStorage.getInstance().reference.child("Image"+System.currentTimeMillis())
+                        propicStorageRef.putFile(selectedImageUri)
+                            .addOnSuccessListener {
+                                it.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                                    fireStore.updateAvatar(playerEmailId, it.toString(),this)
+                                }
+                                Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show() }
+                            .addOnFailureListener{
+                                Toast.makeText(this, "something went wrong ", Toast.LENGTH_SHORT).show()
+                            println("On FAILURE : $it")}
                         sharedPreferences.edit().putString("profilePic",selectedImageUri.toString()).apply()
                     }catch(e : Exception){
                         e.printStackTrace()
@@ -120,9 +140,10 @@ class PlayerProfileActivity : AppCompatActivity() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
+
     fun setDetails(player : Players){
             TVname.text = player.name
-            TVscore.text = player.score.toString()
+            TVscore.text = player.rapidFireScore.toString()
     }
 
     override fun onResume() {
@@ -133,7 +154,6 @@ class PlayerProfileActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         FSplayerName = TVname.text.toString()
-        val uid = sharedPreferences.getString(Constants.CUR_PLAYER,"")
-        uid?.let { Players("101",it, FSplayerName, TVscore.text.toString().toLong() ) }?.let { fireStore.storeDetails(it,this) }
+        FireStore().updateName(playerEmailId, FSplayerName, this)
     }
 }

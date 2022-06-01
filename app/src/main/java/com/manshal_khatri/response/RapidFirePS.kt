@@ -39,7 +39,7 @@ class RapidFirePS : AppCompatActivity() {
 
 
      // logic building variables
-    var mode = 5
+    var mode = 4
     var difficulty = 1
     var timerVal = 40
 //    var defaultLife = 5
