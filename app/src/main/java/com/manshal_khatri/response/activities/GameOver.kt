@@ -1,21 +1,17 @@
-package com.manshal_khatri.response
+package com.manshal_khatri.response.activities
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
+import com.manshal_khatri.response.R
 import com.manshal_khatri.response.fireStore.FireStore
 import com.manshal_khatri.response.util.Constants
-import com.manshal_khatri.response.util.DataStores
 import com.manshal_khatri.response.util.DataStores.preferenceDataStoreScores
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -74,7 +70,7 @@ class GameOver : AppCompatActivity() {
         playAgainBtn.setOnClickListener {
             val intent : Intent
             if(mode == 4  ) {
-                 intent = Intent(this@GameOver,RapidFirePS::class.java)
+                 intent = Intent(this@GameOver, RapidFirePS::class.java)
             }else {
                  intent = Intent(this@GameOver, PlayScreen::class.java)
                 intent.putExtra("mode", mode)

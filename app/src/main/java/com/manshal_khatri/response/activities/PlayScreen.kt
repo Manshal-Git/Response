@@ -1,4 +1,4 @@
-package com.manshal_khatri.response
+package com.manshal_khatri.response.activities
 
 import android.animation.ObjectAnimator
 
@@ -11,9 +11,9 @@ import android.widget.Button
 
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.ToggleButton
 import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
+import com.manshal_khatri.response.R
 
 import java.util.*
 import kotlin.concurrent.schedule
@@ -103,7 +103,7 @@ class PlayScreen : AppCompatActivity() {
         val modeTime = timerVal * 1000
       // Logic functions
         fun gameOver(){
-          val intent = Intent(this@PlayScreen,GameOver::class.java)
+          val intent = Intent(this@PlayScreen, GameOver::class.java)
           intent.putExtra("score",score)
           intent.putExtra("mode",mode)
           startActivity(intent)
@@ -131,7 +131,7 @@ class PlayScreen : AppCompatActivity() {
         fun onCorrect(){
             println("streak $streak")
             setStreak()
-            val intent = Intent(this@PlayScreen,PlayScreen::class.java)
+            val intent = Intent(this@PlayScreen, PlayScreen::class.java)
             intent.putExtra("life",life)
             musicCorrect.start()
             doReset=true
@@ -222,7 +222,9 @@ class PlayScreen : AppCompatActivity() {
                     // when correct answer clicked
                     buttons[chosen].setOnClickListener {
 //                        buttons[chosen].setBackgroundColor(getColor(R.color.white))
-                        buttons[i].foreground=AppCompatResources.getDrawable(this,R.drawable.ic_check)
+                        buttons[i].foreground=AppCompatResources.getDrawable(this,
+                            R.drawable.ic_check
+                        )
                         buttons[i].text=""
                         buttons[i].foregroundGravity=-1
                         onCorrect()

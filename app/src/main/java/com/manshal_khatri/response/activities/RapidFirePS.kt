@@ -1,4 +1,4 @@
-package com.manshal_khatri.response
+package com.manshal_khatri.response.activities
 
 //import android.support.v7.app.AppCompatActivity
 import android.animation.ObjectAnimator
@@ -11,9 +11,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.manshal_khatri.response.R
 import java.util.*
 import kotlin.concurrent.schedule
-import kotlin.concurrent.timer
 
 class RapidFirePS : AppCompatActivity() {
     /* variables and components */
@@ -84,7 +84,7 @@ class RapidFirePS : AppCompatActivity() {
 
         // Logic functions
         fun gameOver(){
-            val intent = Intent(this@RapidFirePS,GameOver::class.java)
+            val intent = Intent(this@RapidFirePS, GameOver::class.java)
             intent.putExtra("score",score)
             intent.putExtra("mode",mode)
             startActivity(intent)

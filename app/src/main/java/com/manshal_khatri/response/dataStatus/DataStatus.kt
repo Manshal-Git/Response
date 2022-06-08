@@ -1,4 +1,4 @@
-package com.manshal_khatri.response.DataStatus
+package com.manshal_khatri.response.dataStatus
 
 import android.content.Context
 import android.net.ConnectivityManager

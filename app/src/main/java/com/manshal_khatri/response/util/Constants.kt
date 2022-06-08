@@ -1,5 +1,7 @@
 package com.manshal_khatri.response.util
 
+import android.app.Application
+import android.content.Context
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -18,6 +20,7 @@ object Constants {
     const val MODE_EXPERT = "expertScore"
     const val MODE_RAPID_FIRE = "rapidFireScore"
     const val PROFILE_IMAGE = "profilePic"
+
 
     fun showProgress(view: View){
         view.visibility=VISIBLE

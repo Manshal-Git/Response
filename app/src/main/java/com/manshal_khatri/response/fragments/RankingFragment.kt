@@ -1,4 +1,4 @@
-package com.manshal_khatri.response
+package com.manshal_khatri.response.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
+import com.manshal_khatri.response.adapter.BeginnerRankAdapter
+import com.manshal_khatri.response.R
+import com.manshal_khatri.response.activities.LeaderBoards
+import com.manshal_khatri.response.activities.playersList
 import com.manshal_khatri.response.dataClass.PlayerInLB
 import com.manshal_khatri.response.util.Constants
 
@@ -37,7 +41,7 @@ class RankingFragment : Fragment() {
             println("NAME || SCORE : $score")
             playersList.add(PlayerInLB(name , score,avatar))
         }
-        topPlayerRV.adapter=BeginnerRankAdapter(activity as Context,playersList)
+        topPlayerRV.adapter= BeginnerRankAdapter(activity as Context, playersList)
         Constants.hideProgress(parent.process)
     }
 }

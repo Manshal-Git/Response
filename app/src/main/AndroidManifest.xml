@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Response">
         <activity
-            android:name=".PlayerProfileActivity"
+            android:name=".activities.PlayerProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".RapidFirePS"
+            android:name=".activities.RapidFirePS"
             android:exported="false" />
         <activity
             android:name=".GamesMenu"
@@ -25,19 +25,19 @@
         <!--<activity
             android:name=".MainActivity"
             android:exported="false" />-->
-        <activity android:name=".MainActivity"
+        <activity android:name=".activities.MainActivity"
             android:exported="false"/>
         <activity
-            android:name=".LeaderBoards"
+            android:name=".activities.LeaderBoards"
             android:exported="false" />
         <activity
-            android:name=".GameOver"
+            android:name=".activities.GameOver"
             android:exported="false" />
         <activity
-            android:name=".PlayScreen"
+            android:name=".activities.PlayScreen"
             android:exported="false" />
         <activity
-            android:name=".AuthenticationActivity"
+            android:name=".activities.AuthenticationActivity"
             android:exported="false" />
         <activity
             android:name=".SplashScreen"

@@ -1,4 +1,4 @@
-package com.manshal_khatri.response
+package com.manshal_khatri.response.activities
 
 import android.Manifest
 import android.app.Activity
@@ -9,26 +9,24 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.Settings
+import android.view.Menu
+import android.view.MenuItem
 
 import android.view.View.*
-import android.widget.EditText
+import android.widget.*
 
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.core.view.isVisible
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.manshal_khatri.response.R
 import com.manshal_khatri.response.dataClass.Players
 import com.manshal_khatri.response.databinding.ActivityPlayerProfileBinding
 import com.manshal_khatri.response.fireStore.FireStore
@@ -42,38 +40,47 @@ import java.lang.Exception
 
 class PlayerProfileActivity : AppCompatActivity() {
     lateinit var binding: ActivityPlayerProfileBinding
-    lateinit var button: AppCompatButton
-    lateinit var signOut : AppCompatButton
-    lateinit var img : ImageView
+    // Layouts
+    lateinit var relativeLayout : RelativeLayout
+//    lateinit var button: AppCompatButton
+//    lateinit var signOut : AppCompatButton
+    lateinit var profileImg : ImageView
     lateinit var edittxt :EditText
     lateinit var TVname : TextView
-    lateinit var  TVscore : TextView
-    lateinit var editNameBtn : AppCompatButton
-    val fireStore = FireStore()
+    lateinit var signOut : TextView
+
+    lateinit var saveNameBtn : AppCompatButton
+    private val fireStore = FireStore()
 
 //    lateinit var loginState : View
-    lateinit var sharedPreferences : SharedPreferences
+    lateinit var sharedPreferences : SharedPreferences  //TODO : NEED TO BE REPLACED WITH DATASTORE FOR SAVING PROPIC
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_profile)
-        button = findViewById(R.id.BtnChooseImage)
-        editNameBtn = findViewById(R.id.BtnChangeName)
-        signOut = findViewById(R.id.btnSignout)
+//        button = findViewById(R.id.BtnChooseImage)
+
+        // ACTIONBAR
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.title = "Profile"
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        saveNameBtn = findViewById(R.id.BtnChangeName)
+
+        relativeLayout = findViewById(R.id.relativeLayer)
+        signOut = findViewById(R.id.signOut)
         edittxt = findViewById(R.id.ETName)
         TVname = findViewById(R.id.TVPlayerName)
-        img = findViewById(R.id.IVprofilePicture)
-        TVscore = findViewById(R.id.TVHighScoreVal)
+        profileImg = findViewById(R.id.IVprofilePicture)
         binding = ActivityPlayerProfileBinding.inflate(layoutInflater)  // Binding.Inflate(layoutInflater) used in Activities
         //loginState= findViewById(R.id.loginState)
         sharedPreferences = getSharedPreferences(Constants.SP_GET_PLAYER_DATA, MODE_PRIVATE)
         val mypic = sharedPreferences.getString(Constants.PROFILE_IMAGE,Constants.DEF_AVATAR)
             ?.toUri()
-        Glide.with(this).load(mypic).circleCrop().into(img)
+        Glide.with(this).load(mypic).circleCrop().into(profileImg)
         fireStore.getDetails(this)
-        button.setOnClickListener {
-            chooseImage()
-        }
+
+
         signOut.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             CoroutineScope(Dispatchers.IO).launch{
@@ -81,27 +88,56 @@ class PlayerProfileActivity : AppCompatActivity() {
                         it[booleanPreferencesKey(Constants.SP_RW_IS_LOGGED_IN)] = false
                     }
             }
-            startActivity(Intent(this@PlayerProfileActivity,AuthenticationActivity::class.java))
+            val intent = Intent(this@PlayerProfileActivity, AuthenticationActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
             finish()
         }
-       editNameBtn.setOnClickListener {
-           editToggler()
-       }
     }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.profile_menu, menu)
+        return true
+    }
+
     @RequiresApi(Build.VERSION_CODES.M)
-    fun editToggler(){
-        if(!edittxt.isVisible){
-            editNameBtn.foreground = getDrawable(R.drawable.ic_check)
-            edittxt.visibility = VISIBLE
-            TVname.visibility = INVISIBLE
-//            Toast.makeText(this, "yes", Toast.LENGTH_SHORT).show()  // DEPRECATED
-        }else{
-            TVname.text = edittxt.text
-            editNameBtn.foreground = getDrawable(R.drawable.ic_edit)
-            edittxt.visibility = INVISIBLE
-            TVname.visibility = VISIBLE
-//            Toast.makeText(this, "no", Toast.LENGTH_SHORT).show()  //DEPRECATED
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.editProfile -> {
+                openEditMode()
+                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onContextItemSelected(item)
         }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun openEditMode(){
+        relativeLayout.background = resources.getDrawable(R.drawable.editing_bg)
+        saveNameBtn.visibility = VISIBLE
+        edittxt.visibility = VISIBLE
+        edittxt.setText(TVname.text.toString())
+        TVname.visibility = INVISIBLE
+        profileImg.foreground = resources.getDrawable(R.drawable.ic_edit)
+        profileImg.setOnClickListener {
+            chooseImage()
+        }
+        saveNameBtn.setOnClickListener {
+            saveChanges()
+        }
+    }
+    fun saveChanges(){
+        with(edittxt){
+            setSelection(this.length())
+            setText("$text ")
+            TVname.text = text.trim()
+            visibility = GONE
+        }
+        saveNameBtn.visibility = GONE
+        TVname.visibility = VISIBLE
+        relativeLayout.background = null
     }
     private fun chooseImage(){
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED){
@@ -111,6 +147,7 @@ class PlayerProfileActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),Constants.READ_STORAGE_PERMISSION)
         }
     }
+    @RequiresApi(Build.VERSION_CODES.M)
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(resultCode==Activity.RESULT_OK){
@@ -118,7 +155,7 @@ class PlayerProfileActivity : AppCompatActivity() {
                 if(data!=null){
                     try{
                         val selectedImageUri = data.data!!
-                        Glide.with(this).load(selectedImageUri).circleCrop().into(img)
+                        Glide.with(this).load(selectedImageUri).circleCrop().into(profileImg)
                         val propicStorageRef : StorageReference = FirebaseStorage.getInstance().reference.child("Image"+System.currentTimeMillis())
                         propicStorageRef.putFile(selectedImageUri)
                             .addOnSuccessListener {
@@ -138,12 +175,14 @@ class PlayerProfileActivity : AppCompatActivity() {
         }else{
             Toast.makeText(this, "Req canceled", Toast.LENGTH_SHORT).show()
         }
+        profileImg.setOnClickListener {  }
+        profileImg.foreground = null
         super.onActivityResult(requestCode, resultCode, data)
     }
 
     fun setDetails(player : Players){
             TVname.text = player.name
-            TVscore.text = player.rapidFireScore.toString()
+//            TVscore.text = player.rapidFireScore.toString()
     }
 
     override fun onResume() {

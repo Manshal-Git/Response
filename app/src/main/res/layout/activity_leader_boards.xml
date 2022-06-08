@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:animateLayoutChanges="true"
-    tools:context=".LeaderBoards">
+    tools:context=".activities.LeaderBoards">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"

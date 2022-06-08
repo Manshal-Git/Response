@@ -13,8 +13,8 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.manshal_khatri.response.AuthenticationActivity
-import com.manshal_khatri.response.playerEmailId
+import com.manshal_khatri.response.activities.AuthenticationActivity
+import com.manshal_khatri.response.activities.playerEmailId
 import com.manshal_khatri.response.R
 import com.manshal_khatri.response.databinding.FragRegisterBinding
 import com.manshal_khatri.response.dataClass.Players
@@ -61,7 +61,7 @@ class RegisterFrag : Fragment() {
     }
     fun registeruser(name : String,email : String,password : String){
         val d = LoadingScreen(activity as Context)
-        val dd = d.loadingScreen()
+        val dd = d.createLoadingDialog()
         d.toggleDialog(dd)  // show
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password).addOnCompleteListener{
             if(it.isSuccessful){

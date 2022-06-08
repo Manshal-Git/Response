@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -17,18 +16,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.manshal_khatri.response.MainActivity
+import com.manshal_khatri.response.activities.MainActivity
 import com.manshal_khatri.response.R
 import com.manshal_khatri.response.databinding.FragLoginBinding
-import com.manshal_khatri.response.playerEmailId
+import com.manshal_khatri.response.activities.playerEmailId
 import com.manshal_khatri.response.util.Constants
-import com.manshal_khatri.response.util.DataStores
 import com.manshal_khatri.response.util.DataStores.preferenceDataStoreAuth
-import com.manshal_khatri.response.util.DataStores.preferenceDataStoreScores
 import com.manshal_khatri.response.util.LoadingScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
@@ -69,7 +65,7 @@ class LoginFrag() : Fragment() {
     }
     fun registeruser(email : String,password : String){
         val d = LoadingScreen(activity as Context)
-        val dd = d.loadingScreen()
+        val dd = d.createLoadingDialog()
         d.toggleDialog(dd) //show
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password).addOnCompleteListener{ it ->
             if(it.isSuccessful){
@@ -84,7 +80,7 @@ class LoginFrag() : Fragment() {
                        }
                    }
                 }
-                startActivity(Intent(activity,MainActivity::class.java))
+                startActivity(Intent(activity, MainActivity::class.java))
             }else{
                 Toast.makeText(activity, it.exception!!.message!!.toString(), Toast.LENGTH_SHORT).show()
                 d.toggleDialog(dd) //hide

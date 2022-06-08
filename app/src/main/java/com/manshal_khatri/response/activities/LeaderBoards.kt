@@ -1,12 +1,12 @@
-package com.manshal_khatri.response
+package com.manshal_khatri.response.activities
 
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import com.google.android.material.navigation.NavigationView
+import com.manshal_khatri.response.R
+import com.manshal_khatri.response.fragments.RankingFragment
 import com.manshal_khatri.response.dataClass.PlayerInLB
 import com.manshal_khatri.response.databinding.ActivityLeaderBoardsBinding
 import com.manshal_khatri.response.fireStore.FireStore

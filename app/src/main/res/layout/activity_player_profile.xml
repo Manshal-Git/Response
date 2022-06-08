@@ -5,100 +5,144 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlayerProfileActivity">
+    tools:context=".activities.PlayerProfileActivity">
 
+    <!--<androidx.coordinatorlayout.widget.CoordinatorLayout-->
+    <!--    android:id="@+id/coordinatorLayer"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent">-->
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="0dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/teal_700">
+            android:background="@color/purple"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/Theme.Material3.Dark" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/backBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_left"
-                android:layout_gravity="start"
-                android:contentDescription="back" />
+                android:id="@+id/IVprofilePicture"
+                android:layout_width="164dp"
+                android:layout_height="164dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="10dp"
+                tools:srcCompat="@tools:sample/avatars" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Player Profile"
-                android:textSize="24dp"
-                android:textColor="@color/white"/>
-
-            <Button
-                android:id="@+id/btnSignout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="sign out"
-                android:textColor="@color/black"
-                android:layout_gravity="end" />
-
-        </androidx.appcompat.widget.Toolbar>
-
+        </RelativeLayout>
 
 
     </com.google.android.material.appbar.AppBarLayout>
+    <!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
 
-    <ImageView
-        android:id="@+id/IVprofilePicture"
-        android:layout_width="164dp"
-        android:layout_height="164dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="300dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/BtnChooseImage"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:text="Choose"
-        android:textColor="@color/black"
-        android:background="@drawable/edit_btn_bg"
-        android:foreground="@drawable/ic_edit"
-        app:layout_constraintBottom_toBottomOf="@+id/IVprofilePicture"
-        app:layout_constraintEnd_toEndOf="@id/IVprofilePicture"
-        />
-
-
-    <EditText
-        android:id="@+id/ETName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Player Name"
-        android:layout_margin="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="92dp"
-        app:layout_constraintBottom_toBottomOf="@+id/IVprofilePicture"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"/>
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
 
-    <TextView
-        android:id="@+id/TVPlayerName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:text="unknown"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/IVprofilePicture"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.466" />
+        <RelativeLayout
+            android:id="@+id/relativeLayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/TVPlayerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:background="@null"
+                android:text="unknown"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.466" />
+
+            <EditText
+                android:id="@+id/ETName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:layout_marginTop="92dp"
+                android:hint="Player Name"
+
+                android:inputType="textShortMessage"
+                android:maxLength="18"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/BtnChangeName"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/edit_btn_bg"
+                android:foreground="@drawable/ic_check"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/profileOptions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayer">
+
+            <TextView
+                android:id="@+id/signOut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:drawableLeft="@drawable/ic_off"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/love"
+                android:text="Log Out"
+                android:textColor="@color/love"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+    <!--
+
+
+
+
+
 
     <TextView
         android:id="@+id/TVHighScore"
@@ -124,21 +168,8 @@
         app:layout_constraintEnd_toStartOf="@+id/IVprofilePicture"
         app:layout_constraintTop_toBottomOf="@id/BtnChangeName" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/BtnChangeName"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/edit_btn_bg"
-        android:foreground="@drawable/ic_edit"
-        app:layout_constraintEnd_toStartOf="@id/IVprofilePicture"
-        app:layout_constraintTop_toTopOf="@id/IVprofilePicture"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-
-         />
-
-
-   <!-- <View
+    -->
+    <!-- <View
         android:id="@+id/loginState"
         android:layout_width="16dp"
         android:layout_height="16dp"
@@ -146,4 +177,5 @@
         android:layout_margin="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

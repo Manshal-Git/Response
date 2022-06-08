@@ -7,7 +7,7 @@ import com.manshal_khatri.response.R
 
 class LoadingScreen(context: Context) : AppCompatDialog(context) {
 
-    fun loadingScreen() : Dialog{
+    fun createLoadingDialog() : Dialog{
        val dialog = Dialog(context)
         dialog.setContentView(R.layout.loading_screen)
         return dialog

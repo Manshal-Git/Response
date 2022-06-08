@@ -7,10 +7,10 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.manshal_khatri.response.LeaderBoards
-import com.manshal_khatri.response.MainActivity
-import com.manshal_khatri.response.PlayerProfileActivity
-import com.manshal_khatri.response.RankingFragment
+import com.manshal_khatri.response.activities.LeaderBoards
+import com.manshal_khatri.response.activities.MainActivity
+import com.manshal_khatri.response.activities.PlayerProfileActivity
+import com.manshal_khatri.response.fragments.RankingFragment
 import com.manshal_khatri.response.dataClass.Players
 import com.manshal_khatri.response.util.Constants
 

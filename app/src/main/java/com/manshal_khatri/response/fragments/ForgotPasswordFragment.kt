@@ -49,7 +49,7 @@ lateinit var binding: FragmentForgotPasswordBinding
         binding.btnReset.setOnClickListener {
             if(!TextUtils.isEmpty(emailET.text.toString().trim(){it <= ' ' })){
                 val d = LoadingScreen(activity as Context)
-                val dd = d.loadingScreen()
+                val dd = d.createLoadingDialog()
                 d.toggleDialog(dd)
                 FirebaseAuth.getInstance().sendPasswordResetEmail(emailET.text.toString()).addOnCompleteListener {
                     if(it.isSuccessful){
